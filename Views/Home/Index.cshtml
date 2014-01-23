@@ -1,55 +1,53 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewBag.Title = "Mortgage Calculator";
+}
+<form data-bind="submit: submit" id="entry_form">
 
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Index</title>
-    </head>
-    <body>
-        <div>
-            <form data-bind="submit: submit" id="entry_form">
-
-                <label for="principal">Principal (USD):</label>
-                <input type="text" data-bind="value: principal" id="principal" /><br />
-                <label for="term">Term:</label>
-                <input type="text" data-bind="value: term" id="term" /><br />
-                <label for="termUnits">Term Units:</label>
-                <select data-bind="value: termUnits" id="termUnits">
-                    <option value="0">Months</option>
-                    <option value="1">Years</option>
-                </select><br />
-                <button type="submit">Calculate</button><br />
-                <label for="monthlyPayment">Monthly Payment:</label>
-                <span data-bind="text: monthlyPayment" id="monthlyPayment"></span><br />
-            </form>
-            <table data-bind="with: amortizationViewModel">
-                <thead data-bind="visible: isNotEmpty" style="display: none">
-                    <tr>
-                    <th>Index</th>
-                    <th>Amount</th>
-                    <th>Principal</th>
-                    <th>Total Principal Paid</th>
-                    <th>Interest</th>
-                    <th>Total Interest Paid</th>
-                    <th>Balance</th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: payments">
-                    <tr>
-                        <td data-bind="text:Index"></td>
-                        <td data-bind="text:PaymentAmount"></td>
-                        <td data-bind="text:Principal"></td>
-                        <td data-bind="text:TotalPrincipal"></td>
-                        <td data-bind="text:Interest"></td>
-                        <td data-bind="text:TotalInterest"></td>
-                        <td data-bind="text:Balance"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
-        <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-2.0.3.min.js"></script>
-        <script src="/Scripts/vm.mortgage.min.js"></script>
-    </body>
-</html>
+    <label for="principal">Principal (USD):</label>
+    <input type="text" data-bind="value: principal" id="principal" /><br />
+    <label for="term">Term:</label>
+    <input type="text" data-bind="value: term" id="term" />
+    <select data-bind="value: termUnits" id="termUnits">
+        <option value="0">Months</option>
+        <option value="1">Years</option>
+    </select><br />
+    <button type="submit">Calculate</button><br />
+</form>
+<div data-bind="visible: amortizationViewModel.isNotEmpty">
+    <label for="monthlyPayment"><strong>Estimated monthly payment:</strong></label>
+    <span data-bind="text: ('$' + monthlyPayment())" id="monthlyPayment" class="result"></span>
+</div>
+<table data-bind="with: amortizationViewModel">
+    <thead data-bind="visible: isNotEmpty" style="display: none">
+        <tr>
+            <th>Index</th>
+            <th>Amount</th>
+            <th>Principal</th>
+            <th>Total Principal Paid</th>
+            <th>Interest</th>
+            <th>Total Interest Paid</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: payments">
+        <tr>
+            <td data-bind="text:Index"></td>
+            <td data-bind="text:PaymentAmount.toFixed(2)"></td>
+            <td data-bind="text:Principal.toFixed(2)"></td>
+            <td data-bind="text:TotalPrincipal.toFixed(2)"></td>
+            <td data-bind="text:Interest.toFixed(2)"></td>
+            <td data-bind="text:TotalInterest.toFixed(2)"></td>
+            <td data-bind="text:Balance.toFixed(2)"></td>
+        </tr>
+    </tbody>
+</table>
+@section Styles
+{
+    <link rel="stylesheet" href="~/Content/index.min.css" />
+}
+@section Scripts
+{
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+    <script src="/Scripts/vm.mortgage.min.js"></script>
+}

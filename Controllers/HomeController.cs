@@ -13,6 +13,7 @@ namespace MortgageCalculator.Controllers
 
         public ActionResult Index()
         {
+            
             return View();
         }
 

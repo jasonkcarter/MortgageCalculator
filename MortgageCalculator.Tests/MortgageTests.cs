@@ -89,6 +89,8 @@ namespace MortgageCalculator.Tests
             // Assert
             Assert.AreEqual(expectedMonthlyPayment, monthlyPayment);
         }
+        
+        // TODO: create and amortization table for 100000 principal 6% apy and 15 year term. Right now, the ending balance is -$1.00, which is a bug.
 
         [TestMethod]
         public void Mortgage_GetAmortizationTable()
